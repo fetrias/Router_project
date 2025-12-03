@@ -1,10 +1,12 @@
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import ConfirmModal from '../components/ConfirmModal';
 
 function TechnologyDetail() {
   const { techId } = useParams();
   const navigate = useNavigate();
   const [technology, setTechnology] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
   useEffect(() => {
     const saved = localStorage.getItem('technologies');
@@ -28,14 +30,13 @@ function TechnologyDetail() {
   };
 
   const deleteTechnology = () => {
-    if (window.confirm('Вы уверены, что хотите удалить эту технологию?')) {
-      const saved = localStorage.getItem('technologies');
-      if (saved) {
-        const technologies = JSON.parse(saved);
-        const updated = technologies.filter(tech => tech.id !== parseInt(techId));
-        localStorage.setItem('technologies', JSON.stringify(updated));
-        navigate('/technologies');
-      }
+    const saved = localStorage.getItem('technologies');
+    if (saved) {
+      const technologies = JSON.parse(saved);
+      const updated = technologies.filter(tech => tech.id !== parseInt(techId));
+      localStorage.setItem('technologies', JSON.stringify(updated));
+      setShowDeleteModal(false);
+      navigate('/technologies');
     }
   };
 
@@ -98,11 +99,19 @@ function TechnologyDetail() {
         )}
 
         <div className="detail-section">
-          <button onClick={deleteTechnology} className="btn btn-danger">
+          <button onClick={() => setShowDeleteModal(true)} className="btn btn-danger">
             Удалить технологию
           </button>
         </div>
       </div>
+
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        onClose={() => setShowDeleteModal(false)}
+        onConfirm={deleteTechnology}
+        title="Удаление технологии"
+        message={`Вы уверены, что хотите удалить технологию "${technology.title}"? Это действие нельзя отменить.`}
+      />
     </div>
   );
 }
