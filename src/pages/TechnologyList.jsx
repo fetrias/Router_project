@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import DeadlineForm from '../components/DeadlineForm';
+import BulkStatusEditor from '../components/BulkStatusEditor';
 
 function TechnologyList() {
   const [technologies, setTechnologies] = useState([]);
@@ -47,6 +49,14 @@ function TechnologyList() {
             Добавить первую технологию
           </Link>
         </div>
+      )}
+
+      {/* Practice 25: Задания 1 и 2 */}
+      {technologies.length > 0 && (
+        <>
+          <DeadlineForm />
+          <BulkStatusEditor />
+        </>
       )}
     </div>
   );

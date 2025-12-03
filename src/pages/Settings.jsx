@@ -1,14 +1,29 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ConfirmModal from '../components/ConfirmModal';
+import DataExporter from '../components/DataExporter';
+import DataImporter from '../components/DataImporter';
 
 function Settings() {
   const [showClearModal, setShowClearModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
+  const [technologies, setTechnologies] = useState([]);
   const [settings, setSettings] = useState({
     theme: localStorage.getItem('theme') || 'light',
     notifications: localStorage.getItem('notifications') === 'true',
     autoSave: localStorage.getItem('autoSave') !== 'false'
   });
+
+  // Загрузка технологий при старте
+  useEffect(() => {
+    const saved = localStorage.getItem('technologies');
+    if (saved) {
+      try {
+        setTechnologies(JSON.parse(saved));
+      } catch (error) {
+        console.error('Error loading technologies:', error);
+      }
+    }
+  }, []);
 
   const handleSettingChange = (key, value) => {
     setSettings(prev => ({
@@ -27,39 +42,19 @@ function Settings() {
     }, 1500);
   };
 
-  const exportData = () => {
-    const technologies = localStorage.getItem('technologies');
-    if (!technologies) {
-      alert('Нет данных для экспорта');
-      return;
-    }
-
-    const dataStr = JSON.stringify(JSON.parse(technologies), null, 2);
-    const dataBlob = new Blob([dataStr], { type: 'application/json' });
-    const url = URL.createObjectURL(dataBlob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `technologies-backup-${new Date().toISOString().split('T')[0]}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const importData = (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
-
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      try {
-        const data = JSON.parse(e.target.result);
-        localStorage.setItem('technologies', JSON.stringify(data));
-        alert('Данные успешно импортированы!');
-        window.location.reload();
-      } catch (error) {
-        alert('Ошибка при импорте данных. Проверьте формат файла.');
-      }
-    };
-    reader.readAsText(file);
+  // Обработчик импорта для DataImporter
+  const handleImport = (importedTechnologies) => {
+    const existing = localStorage.getItem('technologies');
+    const current = existing ? JSON.parse(existing) : [];
+    
+    // Фильтруем дубликаты по ID
+    const newTech = importedTechnologies.filter(newItem => 
+      !current.some(existingItem => existingItem.id === newItem.id)
+    );
+    
+    const updated = [...current, ...newTech];
+    localStorage.setItem('technologies', JSON.stringify(updated));
+    setTechnologies(updated);
   };
 
   return (
@@ -122,30 +117,11 @@ function Settings() {
           <h2>Управление данными</h2>
           
           <div className="setting-item">
-            <h3>Экспорт данных</h3>
-            <p className="setting-description">
-              Скачать резервную копию всех ваших технологий
-            </p>
-            <button onClick={exportData} className="btn btn-primary">
-              📥 Экспортировать данные
-            </button>
+            <DataExporter technologies={technologies} />
           </div>
 
           <div className="setting-item">
-            <h3>Импорт данных</h3>
-            <p className="setting-description">
-              Загрузить данные из файла резервной копии
-            </p>
-            <input
-              type="file"
-              accept=".json"
-              onChange={importData}
-              style={{ display: 'none' }}
-              id="import-file"
-            />
-            <label htmlFor="import-file" className="btn btn-secondary">
-              📤 Импортировать данные
-            </label>
+            <DataImporter onImport={handleImport} />
           </div>
 
           <div className="setting-item danger-zone">
