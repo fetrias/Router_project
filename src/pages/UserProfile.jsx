@@ -27,51 +27,27 @@ function UserProfile() {
 
   return (
     <div className="page">
-      <div className="user-profile-header">
-        <Link to="/" className="back-link">← Назад</Link>
-        <h1>Профиль пользователя</h1>
-      </div>
+      <Link to="/" className="back-link">← Назад</Link>
+      <h1>Профиль пользователя</h1>
       
       <div className="user-profile-card">
         <div className="profile-avatar">
-          <span className="avatar-text">{user.name.charAt(0)}</span>
+          {user.name.charAt(0)}
         </div>
         
-        <div className="profile-content">
-          <h2>{user.name}</h2>
-          <p className="profile-role">
-            <span className="role-icon">💼</span>
-            {user.role}
-          </p>
-          
-          <div className="profile-progress">
-            <div className="progress-header">
-              <span className="progress-label">Прогресс изучения</span>
-              <span className="progress-value">{user.progress}%</span>
-            </div>
-            <div className="progress-bar-wrapper">
-              <div 
-                className="progress-bar-inner" 
-                style={{ width: `${user.progress}%` }}
-              >
-                {user.progress >= 20 && (
-                  <span className="progress-text">✓</span>
-                )}
-              </div>
-            </div>
+        <h2 className="profile-name">{user.name}</h2>
+        <p className="profile-role">{user.role}</p>
+        
+        <div className="profile-progress">
+          <div className="progress-info">
+            <span>Прогресс изучения</span>
+            <strong>{user.progress}%</strong>
           </div>
-          
-          <div className="profile-stats">
-            <div className="stat-item">
-              <span className="stat-icon">📚</span>
-              <span className="stat-label">Технологий изучено</span>
-              <span className="stat-value">{Math.floor(user.progress / 10)}</span>
-            </div>
-            <div className="stat-item">
-              <span className="stat-icon">🎯</span>
-              <span className="stat-label">Активных задач</span>
-              <span className="stat-value">{Math.floor((100 - user.progress) / 15)}</span>
-            </div>
+          <div className="progress-bar">
+            <div 
+              className="progress-fill" 
+              style={{ width: `${user.progress}%` }}
+            ></div>
           </div>
         </div>
       </div>
