@@ -60,7 +60,7 @@ function App() {
   };
 
   return (
-    <Router>
+    <Router basename="/Router_project">
       <div className="app">
         {/* Навигационное меню */}
         <nav className="main-nav">
