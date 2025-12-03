@@ -1,0 +1,110 @@
+.roadmap-importer {
+  background: white;
+  border-radius: 10px;
+  padding: 25px;
+  margin-bottom: 30px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border: 2px dashed #2d6a4f;
+}
+
+.roadmap-importer h3 {
+  margin: 0 0 15px 0;
+  color: #2d6a4f;
+  font-size: 20px;
+}
+
+.import-section p {
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.import-actions {
+  margin-bottom: 20px;
+}
+
+.import-button {
+  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+  width: 100%;
+  max-width: 400px;
+}
+
+.import-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(45, 106, 79, 0.3);
+}
+
+.import-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.url-import {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #eee;
+}
+
+.url-import form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.url-input {
+  flex: 1;
+  padding: 10px 15px;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.3s;
+}
+
+.url-input:focus {
+  outline: none;
+  border-color: #2d6a4f;
+}
+
+.url-import-btn {
+  background-color: #2d6a4f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+  white-space: nowrap;
+}
+
+.url-import-btn:hover:not(:disabled) {
+  background-color: #1b4332;
+}
+
+.url-import-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.hint {
+  font-size: 12px;
+  color: #999;
+  margin: 5px 0 0 0;
+  font-style: italic;
+}
+
+@media (max-width: 768px) {
+  .url-import form {
+    flex-direction: column;
+  }
+  
+  .url-import-btn {
+    width: 100%;
+  }
+}

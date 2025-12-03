@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import RoadmapImporter from '../components/RoadmapImporter';
 
 function AddTechnology() {
   const navigate = useNavigate();
@@ -40,9 +41,20 @@ function AddTechnology() {
     navigate('/technologies');
   };
 
+  // Обработчик импорта из RoadmapImporter
+  const handleImport = async (techData) => {
+    const saved = localStorage.getItem('technologies');
+    const technologies = saved ? JSON.parse(saved) : [];
+    
+    technologies.push(techData);
+    localStorage.setItem('technologies', JSON.stringify(technologies));
+  };
+
   return (
     <div className="page">
       <h1>Добавить новую технологию</h1>
+
+      <RoadmapImporter onImport={handleImport} />
 
       <form onSubmit={handleSubmit} className="technology-form">
         <div className="form-group">

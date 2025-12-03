@@ -11,6 +11,10 @@ import TechnologyDetail from './pages/TechnologyDetail';
 import AddTechnology from './pages/AddTechnology';
 import Statistics from './pages/Statistics';
 import Settings from './pages/Settings';
+import UserList from './pages/UserList';
+import ProductSearch from './pages/ProductSearch';
+import PostList from './pages/PostList';
+import TechnologySearch from './pages/TechnologySearch';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
 
@@ -72,6 +76,8 @@ function App() {
             <li><Link to="/about">О проекте</Link></li>
             <li><Link to="/contact">Контакты</Link></li>
             <li><Link to="/technologies">Все технологии</Link></li>
+            <li><Link to="/technology-search">🔍 Поиск</Link></li>
+            <li><Link to="/api-examples">📡 API Примеры</Link></li>
             <li><Link to="/statistics">Статистика</Link></li>
             <li><Link to="/settings">Настройки</Link></li>
             
@@ -130,6 +136,12 @@ function App() {
             <Route path="/add-technology" element={<AddTechnology />} />
             <Route path="/statistics" element={<Statistics />} />
             <Route path="/settings" element={<Settings />} />
+            <Route path="/technology-search" element={<TechnologySearch />} />
+            
+            {/* Маршруты для API примеров (Practice 24) */}
+            <Route path="/api-examples" element={<UserList />} />
+            <Route path="/product-search" element={<ProductSearch />} />
+            <Route path="/posts" element={<PostList />} />
             
             {/* Авторизация и защищенные маршруты */}
             <Route 
