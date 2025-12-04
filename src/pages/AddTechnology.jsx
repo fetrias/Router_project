@@ -12,7 +12,6 @@ function AddTechnology() {
   const handleSaveTechnology = async (techData) => {
     const newTechnology = {
       ...techData,
-      status: 'not-started',
       notes: '',
       progress: 0
     };

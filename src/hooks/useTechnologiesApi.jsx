@@ -13,6 +13,7 @@ function useTechnologiesApi() {
       
       // Загружаем из localStorage
       const saved = localStorage.getItem('technologies');
+      console.log('[useTechnologiesApi] Saved data from localStorage:', saved);
 
       if (saved) {
         // Попробуем выполнить мягкую миграцию: если в сохранённых данных есть
@@ -48,6 +49,7 @@ function useTechnologiesApi() {
         }
       } else {
         // Mock данные если ничего нет
+        console.log('[useTechnologiesApi] No saved data, creating default technologies');
         const mockTechnologies = [
           {
             id: 1,
@@ -69,8 +71,10 @@ function useTechnologiesApi() {
           }
         ];
         
+        console.log('[useTechnologiesApi] Setting default technologies:', mockTechnologies);
         setTechnologies(mockTechnologies);
         localStorage.setItem('technologies', JSON.stringify(mockTechnologies));
+        console.log('[useTechnologiesApi] Default technologies saved to localStorage');
       }
       
     } catch (err) {
