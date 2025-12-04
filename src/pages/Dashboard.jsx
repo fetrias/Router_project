@@ -21,7 +21,7 @@ function Dashboard() {
           <p>В процессе: {inProgressCount}</p>
           <p>Не начато: {notStartedCount}</p>
         </div>
-        
+
         <div className="dashboard-card">
           <h3>🎯 Быстрые действия</h3>
           <Link to="/add-technology" className="btn btn-primary">
@@ -31,7 +31,7 @@ function Dashboard() {
             Все технологии
           </Link>
         </div>
-        
+
         <div className="dashboard-card">
           <h3>⚙️ Управление</h3>
           <Link to="/settings" className="btn">

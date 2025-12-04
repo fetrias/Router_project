@@ -24,6 +24,17 @@ function Settings() {
       [key]: value
     }));
     localStorage.setItem(key, value.toString());
+
+    // Применяем тему сразу
+    if (key === 'theme') {
+      if (value === 'dark') {
+        document.body.classList.add('dark-theme');
+      } else {
+        document.body.classList.remove('dark-theme');
+      }
+      // Диспатчим кастомное событие для других компонентов
+      window.dispatchEvent(new Event('themeChange'));
+    }
   };
 
   const clearAllData = () => {
@@ -77,7 +88,7 @@ function Settings() {
           <div className="setting-item">
             <label>
               <span>Тема оформления</span>
-              <select 
+              <select
                 value={settings.theme}
                 onChange={(e) => handleSettingChange('theme', e.target.value)}
               >
@@ -91,7 +102,7 @@ function Settings() {
 
         <div className="settings-section">
           <h2>Управление данными</h2>
-          
+
           <div className="setting-item">
             <DataExporter technologies={technologies} />
           </div>

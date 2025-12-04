@@ -35,12 +35,12 @@ function TechnologyDetail() {
   if (!technology) {
     return (
       <div className="page">
-          <h1>Технология не найдена</h1>
-          <p>Технология с ID {techId} не существует.</p>
-          <Link to="/technologies" className="btn">
-            ← Назад к списку
-          </Link>
-        </div>
+        <h1>Технология не найдена</h1>
+        <p>Технология с ID {techId} не существует.</p>
+        <Link to="/technologies" className="btn">
+          ← Назад к списку
+        </Link>
+      </div>
     );
   }
 
@@ -65,19 +65,19 @@ function TechnologyDetail() {
             <button
               onClick={() => updateStatus('not-started')}
               className={technology.status === 'not-started' ? 'active' : ''}
-              >
+            >
               Не начато
             </button>
             <button
               onClick={() => updateStatus('in-progress')}
               className={technology.status === 'in-progress' ? 'active' : ''}
-              >
+            >
               В процессе
             </button>
             <button
               onClick={() => updateStatus('completed')}
               className={technology.status === 'completed' ? 'active' : ''}
-              >
+            >
               Завершено
             </button>
           </div>

@@ -37,7 +37,7 @@ function useApi(url, options = {}) {
   // Выполняем запрос при изменении URL
   useEffect(() => {
     const abortController = new AbortController();
-    
+
     // Выполняем запрос только если URL существует
     if (url) {
       fetchData(abortController);

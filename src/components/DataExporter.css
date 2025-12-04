@@ -1,5 +1,5 @@
 .data-exporter {
-  background: white;
+  background: var(--bg-secondary);
   border: 2px solid #d8f3dc;
   border-radius: 12px;
   padding: 2rem;
@@ -33,7 +33,7 @@
   border-radius: 8px;
   font-size: 1rem;
   font-family: inherit;
-  background: white;
+  background: var(--bg-secondary);
   cursor: pointer;
 }
 
@@ -57,14 +57,14 @@
 }
 
 .checkbox-group span {
-  color: #333;
+  color: var(--text-primary);
   font-weight: normal;
 }
 
 .help-text {
   display: block;
   font-size: 0.875rem;
-  color: #666;
+  color: var(--text-secondary);
   margin-top: 0.5rem;
   font-style: italic;
 }

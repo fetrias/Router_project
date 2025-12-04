@@ -1,9 +1,9 @@
 .technology-form {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
   padding: 2rem;
   box-shadow: 0 2px 15px rgba(45, 106, 79, 0.1);
-  border: 2px solid #d8f3dc;
+  border: 2px solid var(--border-color);
   max-width: 700px;
   margin: 0 auto;
 }
@@ -20,7 +20,7 @@
 
 .form-group label {
   display: block;
-  color: #2d6a4f;
+  color: var(--text-primary);
   font-weight: 600;
   margin-bottom: 0.5rem;
 }
@@ -37,12 +37,14 @@
 .form-group select {
   width: 100%;
   padding: 0.75rem;
-  border: 2px solid #d8f3dc;
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   font-family: inherit;
   transition: all 0.3s;
   box-sizing: border-box;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 .form-group input:focus,
@@ -149,7 +151,7 @@
 }
 
 .btn-secondary {
-  background: white;
+  background: var(--bg-secondary);
   color: #2d6a4f;
   border: 2px solid #2d6a4f;
 }

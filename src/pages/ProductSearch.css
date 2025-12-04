@@ -102,7 +102,7 @@
 }
 
 .product-description {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.5;
   display: -webkit-box;
@@ -117,3 +117,4 @@
   color: #999;
   font-size: 18px;
 }
+

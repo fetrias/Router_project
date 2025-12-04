@@ -3,13 +3,33 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color: #1b4332;
-  background-color: #f1f8f4;
+  /* Светлая тема */
+  --bg-primary: #f1f8f4;
+  --bg-secondary: #ffffff;
+  --text-primary: #1b4332;
+  --text-secondary: #2d6a4f;
+  --border-color: #d8f3dc;
+  --accent-color: #40916c;
+  --accent-hover: #2d6a4f;
+
+  color: var(--text-primary);
+  background-color: var(--bg-primary);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Темная тема */
+body.dark-theme {
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #2d2d2d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --border-color: #404040;
+  --accent-color: #66bb6a;
+  --accent-hover: #81c784;
 }
 
 * {

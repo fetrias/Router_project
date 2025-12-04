@@ -3,11 +3,13 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* Навигация */
 .main-nav {
-  background: linear-gradient(135deg, #2d6a4f 0%, #1b4332 100%);
+  background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
   padding: 1rem 2rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
@@ -42,7 +44,7 @@
   position: relative;
 }
 
-.nav-links li > span {
+.nav-links li>span {
   color: white;
   padding: 0.5rem 1rem;
   display: block;
@@ -95,7 +97,7 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 5px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   list-style: none;
@@ -111,6 +113,7 @@
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -124,15 +127,15 @@
 .dropdown-menu a {
   display: block;
   padding: 0.75rem 1rem;
-  color: #333;
+  color: var(--text-primary);
   text-decoration: none;
   transition: background-color 0.2s;
   border-radius: 0;
 }
 
 .dropdown-menu a:hover {
-  background-color: #f1f8f4;
-  color: #2d6a4f;
+  background-color: var(--bg-primary);
+  color: var(--accent-color);
 }
 
 /* Кнопка выхода */
@@ -188,7 +191,7 @@
 }
 
 .page h1 {
-  color: #2d6a4f;
+  color: var(--accent-color);
   margin-bottom: 1rem;
 }
 
@@ -300,8 +303,8 @@
 }
 
 .technology-item {
-  background: white;
-  border: 1px solid #e0e0e0;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   padding: 1.5rem;
   transition: all 0.3s;
@@ -314,13 +317,13 @@
 }
 
 .technology-item h3 {
-  color: #333;
+  color: var(--text-primary);
   margin-top: 0;
   margin-bottom: 0.5rem;
 }
 
 .technology-item p {
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
   line-height: 1.5;
 }
@@ -341,8 +344,8 @@
 }
 
 .status-not-started {
-  background-color: #f0f0f0;
-  color: #666;
+  background-color: var(--border-color);
+  color: var(--text-secondary);
 }
 
 .status-in-progress {
@@ -359,7 +362,7 @@
 .empty-state {
   text-align: center;
   padding: 3rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .empty-state p {
@@ -374,13 +377,13 @@
 .detail-section {
   margin-bottom: 2rem;
   padding: 1.5rem;
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .detail-section h3 {
-  color: #2d6a4f;
+  color: var(--accent-color);
   margin-top: 0;
   margin-bottom: 1rem;
 }
@@ -393,16 +396,17 @@
 
 .status-buttons button {
   padding: 0.75rem 1.5rem;
-  border: 2px solid #e0e0e0;
-  background: white;
+  border: 2px solid var(--border-color);
+  background: var(--bg-secondary);
+  color: var(--text-primary);
   border-radius: 5px;
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .status-buttons button:hover {
-  border-color: #2d6a4f;
-  background-color: #f1f8f4;
+  border-color: var(--accent-color);
+  background-color: var(--bg-primary);
 }
 
 .status-buttons button.active {
@@ -414,7 +418,7 @@
 /* Форма */
 .technology-form {
   max-width: 600px;
-  background: white;
+  background: var(--bg-secondary);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -428,7 +432,7 @@
 .form-group label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #333;
+  color: var(--text-primary);
   font-weight: 500;
 }
 
@@ -470,7 +474,7 @@
 
 .login-form .hint {
   text-align: center;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.875rem;
   margin-top: 1rem;
 }
@@ -484,20 +488,20 @@
 }
 
 .dashboard-card {
-  background: white;
+  background: var(--bg-secondary);
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .dashboard-card h3 {
-  color: #2d6a4f;
+  color: var(--accent-color);
   margin-top: 0;
   margin-bottom: 1rem;
 }
 
 .dashboard-card p {
-  color: #666;
+  color: var(--text-secondary);
   margin: 0.5rem 0;
 }
 
@@ -507,7 +511,7 @@
 }
 
 .about-content h2 {
-  color: #764ba2;
+  color: var(--accent-color);
   margin-top: 1.5rem;
   margin-bottom: 0.5rem;
 }
@@ -527,14 +531,14 @@
   content: "✓";
   position: absolute;
   left: 0;
-  color: #667eea;
+  color: var(--accent-color);
   font-weight: bold;
 }
 
 .contact-info {
   margin-top: 2rem;
   padding: 2rem;
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
@@ -551,7 +555,7 @@
 
 /* User Profile */
 .user-profile-card {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 12px;
   box-shadow: 0 2px 15px rgba(45, 106, 79, 0.1);
   padding: 2.5rem;
@@ -583,7 +587,7 @@
 }
 
 .profile-role {
-  color: #666;
+  color: var(--text-secondary);
   margin: 0 0 2rem 0;
   font-size: 1.1rem;
 }
@@ -609,7 +613,7 @@
 
 .progress-bar {
   height: 20px;
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 10px;
   overflow: hidden;
   border: 1px solid #d8f3dc;
@@ -653,15 +657,15 @@
   .form-actions .btn {
     width: 100%;
   }
-  
+
   .dashboard-content {
     grid-template-columns: 1fr;
   }
-  
+
   .stats-overview {
     grid-template-columns: 1fr;
   }
-  
+
   .pie-chart {
     max-width: 250px;
   }
@@ -676,7 +680,7 @@
 }
 
 .stat-card {
-  background: white;
+  background: var(--bg-secondary);
   padding: 1.5rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -684,7 +688,7 @@
 }
 
 .stat-card h3 {
-  color: #2d6a4f;
+  color: var(--accent-color);
   margin: 0 0 1rem 0;
   font-size: 1rem;
 }
@@ -692,12 +696,12 @@
 .stat-number {
   font-size: 3rem;
   font-weight: bold;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .stat-percentage {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--text-secondary);
   margin-top: 0.5rem;
 }
 
@@ -727,7 +731,7 @@
 
 /* График прогресса */
 .progress-section {
-  background: white;
+  background: var(--bg-secondary);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -848,7 +852,7 @@
 }
 
 .settings-section {
-  background: white;
+  background: var(--bg-secondary);
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
@@ -862,7 +866,7 @@
 }
 
 .settings-section h3 {
-  color: #333;
+  color: var(--text-primary);
   margin-top: 0;
   margin-bottom: 0.5rem;
   font-size: 1.1rem;
@@ -905,7 +909,7 @@
 }
 
 .setting-description {
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   margin: 0.5rem 0;
 }
@@ -937,7 +941,7 @@
 }
 
 .modal-content {
-  background: white;
+  background: var(--bg-secondary);
   border-radius: 10px;
   box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
   max-width: 500px;
@@ -950,6 +954,7 @@
     transform: translateY(50px);
     opacity: 0;
   }
+
   to {
     transform: translateY(0);
     opacity: 1;
@@ -966,7 +971,7 @@
 
 .modal-header h2 {
   margin: 0;
-  color: #333;
+  color: var(--text-primary);
   font-size: 1.5rem;
 }
 
@@ -974,7 +979,7 @@
   background: none;
   border: none;
   font-size: 2rem;
-  color: #999;
+  color: var(--text-secondary);
   cursor: pointer;
   padding: 0;
   width: 30px;
@@ -986,7 +991,7 @@
 }
 
 .modal-close:hover {
-  color: #333;
+  color: var(--text-primary);
 }
 
 .modal-body {
@@ -995,7 +1000,7 @@
 
 .modal-body p {
   margin: 0;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
   font-size: 1rem;
 }
@@ -1032,6 +1037,7 @@
     transform: translateX(400px);
     opacity: 0;
   }
+
   to {
     transform: translateX(0);
     opacity: 1;

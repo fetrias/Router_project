@@ -13,19 +13,19 @@ function UserList() {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Выполняем GET-запрос к API
       const response = await fetch('https://jsonplaceholder.typicode.com/users');
-      
+
       // Проверяем успешность ответа
       if (!response.ok) {
         throw new Error(`Ошибка HTTP: ${response.status}`);
       }
-      
+
       // Парсим JSON-ответ
       const userData = await response.json();
       setUsers(userData);
-      
+
     } catch (err) {
       // Обрабатываем ошибки
       setError(err.message);
@@ -73,7 +73,7 @@ function UserList() {
   return (
     <div className="user-list">
       <h1>📡 API Примеры</h1>
-      
+
       <div className="api-navigation">
         <Link to="/product-search" className="api-nav-card">
           <h3>🔍 Поиск продуктов</h3>
@@ -89,7 +89,7 @@ function UserList() {
       <p className="example-description">
         Загрузка данных с внешнего API, обработка состояний загрузки и ошибок
       </p>
-      
+
       <div className="users-grid">
         {users.map(user => (
           <div key={user.id} className="user-card">
@@ -97,7 +97,7 @@ function UserList() {
             <p><strong>Email:</strong> {user.email}</p>
             <p><strong>Телефон:</strong> {user.phone}</p>
             <p><strong>Город:</strong> {user.address.city}</p>
-            <p><strong>Компания:</strong> {user.company.name}</p>
+            <p><strong>Специализация:</strong> {user.company.name}</p>
           </div>
         ))}
       </div>

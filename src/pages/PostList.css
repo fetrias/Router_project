@@ -71,7 +71,7 @@
 }
 
 .post-card p {
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
   margin: 0 0 15px 0;
 }
@@ -90,3 +90,4 @@
   padding: 5px 10px;
   border-radius: 5px;
 }
+

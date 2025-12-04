@@ -22,16 +22,16 @@ function Statistics() {
     setStats(statistics);
   }, [technologies]);
 
-  const completionPercentage = stats.total > 0 
-    ? Math.round((stats.completed / stats.total) * 100) 
+  const completionPercentage = stats.total > 0
+    ? Math.round((stats.completed / stats.total) * 100)
     : 0;
 
-  const inProgressPercentage = stats.total > 0 
-    ? Math.round((stats.inProgress / stats.total) * 100) 
+  const inProgressPercentage = stats.total > 0
+    ? Math.round((stats.inProgress / stats.total) * 100)
     : 0;
 
-  const notStartedPercentage = stats.total > 0 
-    ? Math.round((stats.notStarted / stats.total) * 100) 
+  const notStartedPercentage = stats.total > 0
+    ? Math.round((stats.notStarted / stats.total) * 100)
     : 0;
 
   return (
@@ -52,19 +52,19 @@ function Statistics() {
               <h3>Всего технологий</h3>
               <div className="stat-number">{stats.total}</div>
             </div>
-            
+
             <div className="stat-card stat-completed">
               <h3>Завершено</h3>
               <div className="stat-number">{stats.completed}</div>
               <div className="stat-percentage">{completionPercentage}%</div>
             </div>
-            
+
             <div className="stat-card stat-in-progress">
               <h3>В процессе</h3>
               <div className="stat-number">{stats.inProgress}</div>
               <div className="stat-percentage">{inProgressPercentage}%</div>
             </div>
-            
+
             <div className="stat-card stat-not-started">
               <h3>Не начато</h3>
               <div className="stat-number">{stats.notStarted}</div>
@@ -74,7 +74,7 @@ function Statistics() {
 
           <div className="progress-section">
             <h2>График прогресса</h2>
-            
+
             {/* Круговая диаграмма */}
             <div className="pie-chart">
               <svg viewBox="0 0 200 200" className="pie-svg">
@@ -137,19 +137,19 @@ function Statistics() {
               <h3>Общий прогресс изучения</h3>
               <div className="progress-bar-container">
                 <div className="progress-bar">
-                  <div 
+                  <div
                     className="progress-bar-fill completed"
                     style={{ width: `${completionPercentage}%` }}
                   >
                     {completionPercentage > 5 && `${completionPercentage}%`}
                   </div>
-                  <div 
+                  <div
                     className="progress-bar-fill in-progress"
                     style={{ width: `${inProgressPercentage}%` }}
                   >
                     {inProgressPercentage > 5 && `${inProgressPercentage}%`}
                   </div>
-                  <div 
+                  <div
                     className="progress-bar-fill not-started"
                     style={{ width: `${notStartedPercentage}%` }}
                   >

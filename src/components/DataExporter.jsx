@@ -10,12 +10,12 @@ function DataExporter({ technologies }) {
     const exportData = {
       version: '1.0',
       exportedAt: new Date().toISOString(),
-      technologies: includeUserData 
+      technologies: includeUserData
         ? technologies.map(tech => ({
-            ...tech,
-            userNotes: tech.notes || '',
-            userStatus: tech.status || 'not-started'
-          }))
+          ...tech,
+          userNotes: tech.notes || '',
+          userStatus: tech.status || 'not-started'
+        }))
         : technologies.map(({ notes, status, ...tech }) => tech) // Исключаем пользовательские данные
     };
 
@@ -45,7 +45,7 @@ function DataExporter({ technologies }) {
   return (
     <div className="data-exporter">
       <h3>📥 Экспорт данных</h3>
-      
+
       <div className="export-options">
         <div className="form-group">
           <label htmlFor="export-format">Формат экспорта</label>

@@ -46,13 +46,18 @@
 }
 
 @keyframes spin {
-  from { transform: translateY(-50%) rotate(0deg); }
-  to { transform: translateY(-50%) rotate(360deg); }
+  from {
+    transform: translateY(-50%) rotate(0deg);
+  }
+
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
 }
 
 .search-hint {
   text-align: center;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 14px;
   margin-top: 10px;
   font-style: italic;
@@ -112,7 +117,7 @@
 }
 
 .result-description {
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 15px;
   line-height: 1.5;
 }
@@ -130,13 +135,13 @@
 .no-results {
   text-align: center;
   padding: 60px 20px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .no-results p:first-child {
   font-size: 20px;
   margin-bottom: 10px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .search-empty {
@@ -154,7 +159,7 @@
   .results-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .result-meta {
     flex-direction: column;
     align-items: flex-start;

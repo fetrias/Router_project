@@ -155,7 +155,7 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
         >
           {initialData.title ? 'Обновить технологию' : 'Добавить технологию'}
         </button>
-        
+
         <button
           type="button"
           onClick={onCancel}

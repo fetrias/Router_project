@@ -1,5 +1,5 @@
 .data-importer {
-  background: white;
+  background: var(--bg-secondary);
   border: 2px solid #d8f3dc;
   border-radius: 12px;
   padding: 2rem;
@@ -39,7 +39,7 @@
 
 .drop-zone-content p {
   margin: 0.5rem 0;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .drop-icon {
@@ -48,7 +48,7 @@
 }
 
 .or-text {
-  color: #999 !important;
+  color: var(--text-secondary) !important;
   font-size: 0.875rem !important;
   font-style: italic;
 }
@@ -113,16 +113,16 @@
 
 .import-help li {
   padding: 0.5rem 0;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .import-help code {
-  background: white;
+  background: var(--bg-primary);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-family: 'Courier New', monospace;
   font-size: 0.875rem;
-  color: #2d6a4f;
+  color: var(--accent-color);
 }
 
 @media (max-width: 768px) {

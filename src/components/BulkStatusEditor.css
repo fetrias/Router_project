@@ -1,5 +1,5 @@
 .bulk-status-editor {
-  background: white;
+  background: var(--bg-secondary);
   border: 2px solid #d8f3dc;
   border-radius: 12px;
   padding: 2rem;
@@ -181,3 +181,4 @@
   padding: 2rem;
   color: #999;
 }
+

@@ -74,11 +74,11 @@
 .user-card p {
   margin: 8px 0;
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .user-card strong {
-  color: #333;
+  color: var(--text-primary);
 }
 
 /* API Navigation */
@@ -113,7 +113,7 @@
 
 .api-nav-card p {
   margin: 0;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.95rem;
 }
 
@@ -124,7 +124,8 @@
 }
 
 .example-description {
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 1.5rem;
   font-style: italic;
 }
+

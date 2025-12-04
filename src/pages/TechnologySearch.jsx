@@ -8,7 +8,7 @@ function TechnologySearch() {
   const [results, setResults] = useState([]);
   const [searching, setSearching] = useState(false);
   const [showResults, setShowResults] = useState(false);
-  
+
   const debounceTimeout = useRef(null);
 
   const { technologies = [] } = useTechnologies();
@@ -18,7 +18,7 @@ function TechnologySearch() {
     setSearching(true);
 
     // Фильтруем по названию и описанию (категории/сложность не требуются)
-    const filtered = (technologies || []).filter(tech => 
+    const filtered = (technologies || []).filter(tech =>
       tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       tech.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -86,7 +86,7 @@ function TechnologySearch() {
   return (
     <div className="technology-search-page">
       <h1>🔍 Поиск технологий</h1>
-      
+
       <div className="search-container">
         <div className="search-input-wrapper">
           <input
@@ -109,22 +109,22 @@ function TechnologySearch() {
       {showResults && (
         <div className="search-results">
           <h2>
-            {results.length > 0 
-              ? `Найдено результатов: ${results.length}` 
+            {results.length > 0
+              ? `Найдено результатов: ${results.length}`
               : 'Ничего не найдено'}
           </h2>
 
           {results.length > 0 && (
             <div className="results-grid">
               {results.map((tech) => (
-                <Link 
-                  to={`/technologies/${tech.id}`} 
+                <Link
+                  to={`/technologies/${tech.id}`}
                   key={tech.id}
                   className="result-card"
                 >
                   <div className="result-header">
                     <h3>{tech.title}</h3>
-                    <span 
+                    <span
                       className="result-status"
                       style={{ backgroundColor: getStatusColor(tech.status) }}
                     >

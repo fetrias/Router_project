@@ -10,7 +10,7 @@ function useTechnologiesApi() {
     try {
       setLoading(true);
       setError(null);
-      
+
       // Загружаем из localStorage
       const saved = localStorage.getItem('technologies');
 
@@ -65,11 +65,11 @@ function useTechnologiesApi() {
             status: 'completed'
           }
         ];
-        
+
         setTechnologies(mockTechnologies);
         localStorage.setItem('technologies', JSON.stringify(mockTechnologies));
       }
-      
+
     } catch (err) {
       setError('Не удалось загрузить технологии');
       console.error('Ошибка загрузки:', err);
@@ -86,13 +86,13 @@ function useTechnologiesApi() {
         ...techData,
         createdAt: new Date().toISOString()
       };
-      
+
       const updatedTechs = [...technologies, newTech];
       setTechnologies(updatedTechs);
       localStorage.setItem('technologies', JSON.stringify(updatedTechs));
-      
+
       return newTech;
-      
+
     } catch (err) {
       throw new Error('Не удалось добавить технологию');
     }
@@ -104,10 +104,10 @@ function useTechnologiesApi() {
       const updatedTechs = technologies.map(tech =>
         tech.id === id ? { ...tech, ...updates } : tech
       );
-      
+
       setTechnologies(updatedTechs);
       localStorage.setItem('technologies', JSON.stringify(updatedTechs));
-      
+
     } catch (err) {
       throw new Error('Не удалось обновить технологию');
     }
@@ -118,7 +118,7 @@ function useTechnologiesApi() {
       const updatedTechs = technologies.filter(tech => tech.id !== id);
       setTechnologies(updatedTechs);
       localStorage.setItem('technologies', JSON.stringify(updatedTechs));
-      
+
     } catch (err) {
       throw new Error('Не удалось удалить технологию');
     }
@@ -151,7 +151,7 @@ function useTechnologiesApi() {
     addTechnology,
     updateTechnology,
     deleteTechnology
-    ,bulkUpdate
+    , bulkUpdate
   };
 }
 

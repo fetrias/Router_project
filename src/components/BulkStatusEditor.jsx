@@ -17,8 +17,8 @@ function BulkStatusEditor() {
   };
 
   const handleToggleSelect = (id) => {
-    setSelectedIds(prev => 
-      prev.includes(id) 
+    setSelectedIds(prev =>
+      prev.includes(id)
         ? prev.filter(selectedId => selectedId !== id)
         : [...prev, id]
     );
@@ -26,7 +26,7 @@ function BulkStatusEditor() {
 
   const handleBulkUpdate = (e) => {
     e.preventDefault();
-    
+
     if (selectedIds.length === 0) {
       setMessage('Выберите хотя бы одну технологию');
       setTimeout(() => setMessage(''), 3000);
@@ -68,7 +68,7 @@ function BulkStatusEditor() {
   return (
     <div className="bulk-status-editor">
       <h3>Массовое редактирование статусов</h3>
-      
+
       {technologies.length === 0 ? (
         <div className="empty-state">
           <p>Нет технологий для редактирования</p>
@@ -76,14 +76,14 @@ function BulkStatusEditor() {
       ) : (
         <>
           <div className="bulk-controls">
-            <button 
+            <button
               type="button"
               onClick={handleSelectAll}
               className="btn-select-all"
             >
               {selectedIds.length === technologies.length ? 'Снять выделение' : 'Выбрать все'}
             </button>
-            
+
             <div className="selection-info">
               Выбрано: <strong>{selectedIds.length}</strong> из {technologies.length}
             </div>
@@ -99,9 +99,9 @@ function BulkStatusEditor() {
                 />
                 <div className="tech-info">
                   <div className="tech-name">{tech.title}</div>
-                  <div 
+                  <div
                     className="tech-status-badge"
-                    style={{ 
+                    style={{
                       backgroundColor: getStatusColor(tech.status) + '20',
                       color: getStatusColor(tech.status),
                       borderColor: getStatusColor(tech.status)
@@ -134,8 +134,8 @@ function BulkStatusEditor() {
               </select>
             </div>
 
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="btn-apply"
               disabled={selectedIds.length === 0 || !bulkStatus}
             >
