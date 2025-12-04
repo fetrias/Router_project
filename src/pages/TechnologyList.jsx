@@ -1,18 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import DeadlineForm from '../components/DeadlineForm';
 import BulkStatusEditor from '../components/BulkStatusEditor';
+import { useTechnologies } from '../contexts/TechnologiesContext';
 
 function TechnologyList() {
-  const [technologies, setTechnologies] = useState([]);
-
-  // Загружаем технологии из localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('technologies');
-    if (saved) {
-      setTechnologies(JSON.parse(saved));
-    }
-  }, []);
+  const { technologies = [] } = useTechnologies();
 
   return (
     <div className="page">
@@ -51,10 +42,8 @@ function TechnologyList() {
         </div>
       )}
 
-      {/* Practice 25: Задания 1 и 2 */}
       {technologies.length > 0 && (
         <>
-          <DeadlineForm />
           <BulkStatusEditor />
         </>
       )}

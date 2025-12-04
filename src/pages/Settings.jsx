@@ -2,28 +2,21 @@ import { useState, useEffect } from 'react';
 import ConfirmModal from '../components/ConfirmModal';
 import DataExporter from '../components/DataExporter';
 import DataImporter from '../components/DataImporter';
+import { useTechnologies } from '../contexts/TechnologiesContext';
 
 function Settings() {
   const [showClearModal, setShowClearModal] = useState(false);
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
-  const [technologies, setTechnologies] = useState([]);
+  const { technologies, addTechnology, refetch } = useTechnologies();
+  const [localTechnologies, setLocalTechnologies] = useState([]);
   const [settings, setSettings] = useState({
-    theme: localStorage.getItem('theme') || 'light',
-    notifications: localStorage.getItem('notifications') === 'true',
-    autoSave: localStorage.getItem('autoSave') !== 'false'
+    theme: localStorage.getItem('theme') || 'light'
   });
 
-  // Загрузка технологий при старте
+  // Синхронизируем локальное отображение с провайдером
   useEffect(() => {
-    const saved = localStorage.getItem('technologies');
-    if (saved) {
-      try {
-        setTechnologies(JSON.parse(saved));
-      } catch (error) {
-        console.error('Error loading technologies:', error);
-      }
-    }
-  }, []);
+    setLocalTechnologies(technologies || []);
+  }, [technologies]);
 
   const handleSettingChange = (key, value) => {
     setSettings(prev => ({
@@ -34,27 +27,44 @@ function Settings() {
   };
 
   const clearAllData = () => {
+    // Удаляем все технологии через localStorage и предлагаем рефреш провайдера
     localStorage.removeItem('technologies');
     setShowClearModal(false);
     setShowSuccessMessage(true);
     setTimeout(() => {
+      // Попытаемся обновить провайдер
+      refetch();
       window.location.reload();
-    }, 1500);
+    }, 800);
   };
 
   // Обработчик импорта для DataImporter
-  const handleImport = (importedTechnologies) => {
-    const existing = localStorage.getItem('technologies');
-    const current = existing ? JSON.parse(existing) : [];
-    
-    // Фильтруем дубликаты по ID
-    const newTech = importedTechnologies.filter(newItem => 
-      !current.some(existingItem => existingItem.id === newItem.id)
-    );
-    
-    const updated = [...current, ...newTech];
-    localStorage.setItem('technologies', JSON.stringify(updated));
-    setTechnologies(updated);
+  const handleImport = async (importedTechnologies) => {
+    // Поддерживаем как массив, так и одиночный объект
+    let items = [];
+    if (!importedTechnologies) return;
+    if (Array.isArray(importedTechnologies)) {
+      items = importedTechnologies;
+    } else if (typeof importedTechnologies === 'object') {
+      items = [importedTechnologies];
+    } else {
+      return;
+    }
+
+    // Добавляем каждую технологию через провайдер, избегая дубликатов
+    const existing = technologies || [];
+    const newItems = items.filter(it => !existing.some(e => e.id === it.id));
+    for (const it of newItems) {
+      // ensure id and createdAt
+      const tech = {
+        id: it.id || Date.now() + Math.random(),
+        ...it,
+        createdAt: it.createdAt || new Date().toISOString()
+      };
+      await addTechnology(tech);
+    }
+    // Обновим локальный вид
+    setLocalTechnologies(technologies || []);
   };
 
   return (
@@ -80,40 +90,6 @@ function Settings() {
         </div>
 
         <div className="settings-section">
-          <h2>Уведомления</h2>
-          <div className="setting-item">
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={settings.notifications}
-                onChange={(e) => handleSettingChange('notifications', e.target.checked)}
-              />
-              <span>Включить уведомления</span>
-            </label>
-            <p className="setting-description">
-              Получать напоминания о необходимости изучения технологий
-            </p>
-          </div>
-        </div>
-
-        <div className="settings-section">
-          <h2>Сохранение данных</h2>
-          <div className="setting-item">
-            <label className="checkbox-label">
-              <input
-                type="checkbox"
-                checked={settings.autoSave}
-                onChange={(e) => handleSettingChange('autoSave', e.target.checked)}
-              />
-              <span>Автоматическое сохранение</span>
-            </label>
-            <p className="setting-description">
-              Автоматически сохранять изменения в localStorage
-            </p>
-          </div>
-        </div>
-
-        <div className="settings-section">
           <h2>Управление данными</h2>
           
           <div className="setting-item">
@@ -132,16 +108,6 @@ function Settings() {
             <button onClick={() => setShowClearModal(true)} className="btn btn-danger">
               🗑️ Удалить все данные
             </button>
-          </div>
-        </div>
-
-        <div className="settings-section">
-          <h2>О приложении</h2>
-          <div className="about-app">
-            <p><strong>Версия:</strong> 1.0.0</p>
-            <p><strong>React:</strong> 19.2.0</p>
-            <p><strong>React Router:</strong> 7.9.6</p>
-            <p><strong>Создано для:</strong> Практическое занятие 23</p>
           </div>
         </div>
       </div>

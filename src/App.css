@@ -921,18 +921,6 @@
   color: #dc3545;
 }
 
-.about-app {
-  color: #666;
-}
-
-.about-app p {
-  margin: 0.5rem 0;
-}
-
-.about-app strong {
-  color: #333;
-}
-
 /* Модальное окно подтверждения */
 .modal-overlay {
   position: fixed;
@@ -1054,93 +1042,4 @@
   to {
     opacity: 0;
   }
-}
-
-/* Resources section */
-.loading-resources,
-.resources-error {
-  padding: 1.5rem;
-  text-align: center;
-  border: 2px dashed #ddd;
-  border-radius: 8px;
-  margin-top: 1rem;
-}
-
-.resources-error {
-  border-color: #dc3545;
-  background: #fff5f5;
-}
-
-.resources-error p {
-  color: #dc3545;
-  margin-bottom: 1rem;
-}
-
-.resources-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.resource-card {
-  background: #f8f9fa;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 1rem;
-  transition: all 0.3s;
-}
-
-.resource-card:hover {
-  border-color: #2d6a4f;
-  box-shadow: 0 2px 8px rgba(45, 106, 79, 0.15);
-}
-
-.resource-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-
-.resource-header h4 {
-  margin: 0;
-  color: #2d6a4f;
-  font-size: 1.1rem;
-}
-
-.resource-stars {
-  color: #ffc107;
-  font-size: 0.9rem;
-  white-space: nowrap;
-}
-
-.resource-description {
-  color: #666;
-  margin: 0.5rem 0;
-  font-size: 0.9rem;
-}
-
-.resource-language {
-  display: inline-block;
-  background: #2d6a4f;
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 12px;
-  font-size: 0.8rem;
-  margin-top: 0.5rem;
-}
-
-.resource-link {
-  display: inline-block;
-  margin-top: 0.75rem;
-  color: #2d6a4f;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.resource-link:hover {
-  color: #1b4332;
-  text-decoration: underline;
 }

@@ -14,10 +14,9 @@ function DataExporter({ technologies }) {
         ? technologies.map(tech => ({
             ...tech,
             userNotes: tech.notes || '',
-            userStatus: tech.status || 'not-started',
-            userDeadline: tech.deadline || ''
+            userStatus: tech.status || 'not-started'
           }))
-        : technologies.map(({ notes, status, deadline, ...tech }) => tech) // Исключаем пользовательские данные
+        : technologies.map(({ notes, status, ...tech }) => tech) // Исключаем пользовательские данные
     };
 
     let dataStr, fileType, fileName;

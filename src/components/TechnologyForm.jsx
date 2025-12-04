@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './TechnologyForm.css';
 
 function TechnologyForm({ onSave, onCancel, initialData = {} }) {
@@ -6,15 +6,15 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
   const [formData, setFormData] = useState({
     title: initialData.title || '',
     description: initialData.description || '',
-    category: initialData.category || 'frontend',
-    difficulty: initialData.difficulty || 'beginner',
-    deadline: initialData.deadline || '',
-    resources: initialData.resources || ['']
+    status: initialData.status || 'not-started'
   });
 
   // Состояние ошибок
   const [errors, setErrors] = useState({});
   const [isFormValid, setIsFormValid] = useState(false);
+  const titleRef = useRef(null);
+  const descriptionRef = useRef(null);
+  const statusRef = useRef(null);
 
   // Валидация формы
   const validateForm = () => {
@@ -36,36 +36,10 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
       newErrors.description = 'Описание должно содержать минимум 10 символов';
     }
 
-    // Валидация дедлайна
-    if (formData.deadline) {
-      const deadlineDate = new Date(formData.deadline);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      
-      if (deadlineDate < today) {
-        newErrors.deadline = 'Дедлайн не может быть в прошлом';
-      }
-    }
-
-    // Валидация ресурсов
-    formData.resources.forEach((resource, index) => {
-      if (resource && !isValidUrl(resource)) {
-        newErrors[`resource_${index}`] = 'Введите корректный URL';
-      }
-    });
+    // (Остальные поля не требуются по заданию и не валидируются здесь)
 
     setErrors(newErrors);
     setIsFormValid(Object.keys(newErrors).length === 0);
-  };
-
-  // Проверка URL
-  const isValidUrl = (string) => {
-    try {
-      new URL(string);
-      return true;
-    } catch (_) {
-      return false;
-    }
   };
 
   // Валидация при каждом изменении формы
@@ -82,47 +56,24 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
     }));
   };
 
-  // Обработчик изменения ресурсов
-  const handleResourceChange = (index, value) => {
-    const newResources = [...formData.resources];
-    newResources[index] = value;
-    setFormData(prev => ({
-      ...prev,
-      resources: newResources
-    }));
-  };
-
-  // Добавление нового поля ресурса
-  const addResourceField = () => {
-    setFormData(prev => ({
-      ...prev,
-      resources: [...prev.resources, '']
-    }));
-  };
-
-  // Удаление поля ресурса
-  const removeResourceField = (index) => {
-    if (formData.resources.length > 1) {
-      const newResources = formData.resources.filter((_, i) => i !== index);
-      setFormData(prev => ({
-        ...prev,
-        resources: newResources
-      }));
-    }
-  };
-
   // Обработчик отправки формы
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (isFormValid) {
-      // Очищаем пустые ресурсы перед сохранением
-      const cleanedData = {
-        ...formData,
-        resources: formData.resources.filter(resource => resource.trim() !== '')
-      };
-      
-      onSave(cleanedData);
+      onSave(formData);
+
+      if (statusRef.current) {
+        statusRef.current.textContent = 'Форма успешно отправлена';
+      }
+    } else {
+      // Фокус на первое поле с ошибкой
+      const firstError = Object.keys(errors)[0];
+      if (firstError === 'title' && titleRef.current) {
+        titleRef.current.focus();
+      } else if (firstError === 'description' && descriptionRef.current) {
+        descriptionRef.current.focus();
+      }
     }
   };
 
@@ -141,6 +92,7 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
           type="text"
           value={formData.title}
           onChange={handleChange}
+          ref={titleRef}
           className={errors.title ? 'error' : ''}
           placeholder="Например: React, Node.js, TypeScript"
           aria-describedby={errors.title ? 'title-error' : undefined}
@@ -163,6 +115,7 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
           name="description"
           value={formData.description}
           onChange={handleChange}
+          ref={descriptionRef}
           rows="4"
           className={errors.description ? 'error' : ''}
           placeholder="Опишите, что это за технология и зачем её изучать..."
@@ -176,101 +129,21 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
         )}
       </div>
 
-      {/* Выбор категории */}
+      {/* Поле статуса */}
       <div className="form-group">
-        <label htmlFor="category">Категория</label>
-        <select
-          id="category"
-          name="category"
-          value={formData.category}
-          onChange={handleChange}
-        >
-          <option value="frontend">Frontend</option>
-          <option value="backend">Backend</option>
-          <option value="mobile">Mobile</option>
-          <option value="devops">DevOps</option>
-          <option value="database">Базы данных</option>
-          <option value="tools">Инструменты</option>
-        </select>
-      </div>
-
-      {/* Выбор сложности */}
-      <div className="form-group">
-        <label htmlFor="difficulty">Уровень сложности</label>
-        <select
-          id="difficulty"
-          name="difficulty"
-          value={formData.difficulty}
-          onChange={handleChange}
-        >
-          <option value="beginner">Начинающий</option>
-          <option value="intermediate">Средний</option>
-          <option value="advanced">Продвинутый</option>
-        </select>
-      </div>
-
-      {/* Поле дедлайна */}
-      <div className="form-group">
-        <label htmlFor="deadline">
-          Планируемая дата освоения
+        <label htmlFor="status">
+          Статус изучения
         </label>
-        <input
-          id="deadline"
-          name="deadline"
-          type="date"
-          value={formData.deadline}
+        <select
+          id="status"
+          name="status"
+          value={formData.status}
           onChange={handleChange}
-          className={errors.deadline ? 'error' : ''}
-          aria-describedby={errors.deadline ? 'deadline-error' : undefined}
-        />
-        {errors.deadline && (
-          <span id="deadline-error" className="error-message" role="alert">
-            {errors.deadline}
-          </span>
-        )}
-      </div>
-
-      {/* Поля ресурсов */}
-      <div className="form-group">
-        <label>Ресурсы для изучения</label>
-        {formData.resources.map((resource, index) => (
-          <div key={index} className="resource-field">
-            <input
-              type="url"
-              value={resource}
-              onChange={(e) => handleResourceChange(index, e.target.value)}
-              placeholder="https://example.com"
-              className={errors[`resource_${index}`] ? 'error' : ''}
-              aria-describedby={errors[`resource_${index}`] ? `resource-${index}-error` : undefined}
-            />
-            {formData.resources.length > 1 && (
-              <button
-                type="button"
-                onClick={() => removeResourceField(index)}
-                className="remove-resource"
-                aria-label="Удалить ресурс"
-              >
-                ×
-              </button>
-            )}
-            {errors[`resource_${index}`] && (
-              <span 
-                id={`resource-${index}-error`} 
-                className="error-message" 
-                role="alert"
-              >
-                {errors[`resource_${index}`]}
-              </span>
-            )}
-          </div>
-        ))}
-        <button
-          type="button"
-          onClick={addResourceField}
-          className="add-resource"
         >
-          + Добавить ещё ресурс
-        </button>
+          <option value="not-started">Не начато</option>
+          <option value="in-progress">В процессе</option>
+          <option value="completed">Завершено</option>
+        </select>
       </div>
 
       {/* Кнопки формы */}
@@ -298,6 +171,12 @@ function TechnologyForm({ onSave, onCancel, initialData = {} }) {
           ⚠️ Заполните все обязательные поля корректно
         </div>
       )}
+      {/* aria-live region for screen readers */}
+      <div
+        ref={statusRef}
+        aria-live="polite"
+        style={{ position: 'absolute', left: '-10000px', width: '1px', height: '1px', overflow: 'hidden' }}
+      />
     </form>
   );
 }

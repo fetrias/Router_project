@@ -17,6 +17,7 @@ import PostList from './pages/PostList';
 import TechnologySearch from './pages/TechnologySearch';
 import ProtectedRoute from './components/ProtectedRoute';
 import './App.css';
+import { TechnologiesProvider } from './contexts/TechnologiesContext';
 
 function App() {
   // Пример данных пользователей
@@ -64,7 +65,8 @@ function App() {
   };
 
   return (
-    <Router basename="/Router_project">
+    <Router basename={import.meta.env.BASE_URL}>
+      <TechnologiesProvider>
       <div className="app">
         {/* Навигационное меню */}
         <nav className="main-nav">
@@ -138,7 +140,7 @@ function App() {
             <Route path="/settings" element={<Settings />} />
             <Route path="/technology-search" element={<TechnologySearch />} />
             
-            {/* Маршруты для API примеров (Practice 24) */}
+            {/* Маршруты для API примеров */}
             <Route path="/api-examples" element={<UserList />} />
             <Route path="/product-search" element={<ProductSearch />} />
             <Route path="/posts" element={<PostList />} />
@@ -160,6 +162,7 @@ function App() {
           </Routes>
         </main>
       </div>
+      </TechnologiesProvider>
     </Router>
   );
 }

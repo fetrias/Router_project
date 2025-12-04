@@ -127,15 +127,6 @@
   font-size: 14px;
 }
 
-.result-category {
-  color: #2d6a4f;
-  font-weight: 500;
-}
-
-.result-difficulty {
-  color: #666;
-}
-
 .no-results {
   text-align: center;
   padding: 60px 20px;

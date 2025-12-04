@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 // Кастомный хук для работы с API
 function useApi(url, options = {}) {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   // Функция для выполнения запроса

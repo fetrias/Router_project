@@ -1,30 +1,23 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import TechnologyForm from '../components/TechnologyForm';
+import { useTechnologies } from '../contexts/TechnologiesContext';
 
 function AddTechnology() {
   const navigate = useNavigate();
 
-  // Обработчик сохранения технологии
-  const handleSaveTechnology = (techData) => {
-    const saved = localStorage.getItem('technologies');
-    const technologies = saved ? JSON.parse(saved) : [];
+  const { addTechnology } = useTechnologies();
 
-    // Создаем новую технологию с уникальным ID
+  // Обработчик сохранения технологии
+  const handleSaveTechnology = async (techData) => {
     const newTechnology = {
-      id: Date.now(),
       ...techData,
       status: 'not-started',
-      createdAt: new Date().toISOString(),
       notes: '',
       progress: 0
     };
 
-    // Добавляем в массив и сохраняем
-    technologies.push(newTechnology);
-    localStorage.setItem('technologies', JSON.stringify(technologies));
-
-    // Перенаправляем на страницу со списком
+    await addTechnology(newTechnology);
     navigate('/technologies');
   };
 

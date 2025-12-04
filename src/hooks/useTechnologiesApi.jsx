@@ -13,9 +13,39 @@ function useTechnologiesApi() {
       
       // Загружаем из localStorage
       const saved = localStorage.getItem('technologies');
-      
+
       if (saved) {
-        setTechnologies(JSON.parse(saved));
+        // Попробуем выполнить мягкую миграцию: если в сохранённых данных есть
+        // старые поля (category, difficulty, deadline, resources) — создаём резервную
+        // копию и удаляем эти поля из записей.
+        try {
+          const parsed = JSON.parse(saved);
+
+          const hasOldFields = parsed.some(item => (
+            item && (item.hasOwnProperty('category') || item.hasOwnProperty('difficulty') || item.hasOwnProperty('deadline') || item.hasOwnProperty('resources'))
+          ));
+
+          if (hasOldFields) {
+            // Создаём резервную копию с временной меткой
+            try {
+              const backupKey = `technologies_backup_${Date.now()}`;
+              localStorage.setItem(backupKey, JSON.stringify(parsed));
+              console.info(`[useTechnologiesApi] Backup saved to localStorage key: ${backupKey}`);
+            } catch (bkErr) {
+              console.warn('[useTechnologiesApi] Failed to write backup to localStorage', bkErr);
+            }
+
+            // Убираем старые поля
+            const cleaned = parsed.map(({ category, difficulty, deadline, resources, ...rest }) => rest);
+            localStorage.setItem('technologies', JSON.stringify(cleaned));
+            setTechnologies(cleaned);
+          } else {
+            setTechnologies(parsed);
+          }
+        } catch (parseErr) {
+          console.error('[useTechnologiesApi] Failed to parse saved technologies, falling back to empty', parseErr);
+          setTechnologies([]);
+        }
       } else {
         // Mock данные если ничего нет
         const mockTechnologies = [
@@ -23,28 +53,19 @@ function useTechnologiesApi() {
             id: 1,
             title: 'React',
             description: 'Библиотека для создания пользовательских интерфейсов',
-            category: 'frontend',
-            difficulty: 'beginner',
-            status: 'in-progress',
-            resources: ['https://react.dev', 'https://ru.reactjs.org']
+            status: 'in-progress'
           },
           {
             id: 2,
             title: 'Node.js',
             description: 'Среда выполнения JavaScript на сервере',
-            category: 'backend',
-            difficulty: 'intermediate',
-            status: 'not-started',
-            resources: ['https://nodejs.org']
+            status: 'not-started'
           },
           {
             id: 3,
             title: 'TypeScript',
             description: 'Типизированное надмножество JavaScript',
-            category: 'language',
-            difficulty: 'intermediate',
-            status: 'completed',
-            resources: ['https://www.typescriptlang.org']
+            status: 'completed'
           }
         ];
         
@@ -64,7 +85,7 @@ function useTechnologiesApi() {
   const addTechnology = async (techData) => {
     try {
       const newTech = {
-        id: Date.now(),
+        id: techData.id || Date.now(),
         ...techData,
         createdAt: new Date().toISOString()
       };
@@ -94,7 +115,6 @@ function useTechnologiesApi() {
       throw new Error('Не удалось обновить технологию');
     }
   };
-
   // Удаление технологии
   const deleteTechnology = async (id) => {
     try {
@@ -104,6 +124,20 @@ function useTechnologiesApi() {
       
     } catch (err) {
       throw new Error('Не удалось удалить технологию');
+    }
+  };
+
+  // Массовое обновление (например, смена статусов)
+  const bulkUpdate = async (ids = [], updates = {}) => {
+    try {
+      const updatedTechs = technologies.map(tech =>
+        ids.includes(tech.id) ? { ...tech, ...updates } : tech
+      );
+
+      setTechnologies(updatedTechs);
+      localStorage.setItem('technologies', JSON.stringify(updatedTechs));
+    } catch (err) {
+      throw new Error('Не удалось выполнить массовое обновление');
     }
   };
 
@@ -120,6 +154,7 @@ function useTechnologiesApi() {
     addTechnology,
     updateTechnology,
     deleteTechnology
+    ,bulkUpdate
   };
 }
 

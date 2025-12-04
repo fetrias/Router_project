@@ -28,12 +28,7 @@ function PostList() {
 
   return (
     <div className="post-list">
-      <div className="post-list-header">
-        <h2>Список постов ({posts?.length || 0})</h2>
-        <button onClick={refetch} className="refresh-button">
-          🔄 Обновить
-        </button>
-      </div>
+      <h2>Список постов ({posts?.length || 0})</h2>
 
       <div className="posts-container">
         {posts?.map(post => (

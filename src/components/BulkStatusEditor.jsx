@@ -1,27 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useTechnologies } from '../contexts/TechnologiesContext';
 import './BulkStatusEditor.css';
 
 function BulkStatusEditor() {
-  const [technologies, setTechnologies] = useState([]);
+  const { technologies = [], bulkUpdate } = useTechnologies();
   const [selectedIds, setSelectedIds] = useState([]);
   const [bulkStatus, setBulkStatus] = useState('');
   const [message, setMessage] = useState('');
-
-  useEffect(() => {
-    loadTechnologies();
-  }, []);
-
-  const loadTechnologies = () => {
-    const stored = localStorage.getItem('technologies');
-    if (stored) {
-      try {
-        const parsed = JSON.parse(stored);
-        setTechnologies(parsed);
-      } catch (error) {
-        console.error('Error loading technologies:', error);
-      }
-    }
-  };
 
   const handleSelectAll = () => {
     if (selectedIds.length === technologies.length) {
@@ -54,14 +39,8 @@ function BulkStatusEditor() {
       return;
     }
 
-    const updatedTechnologies = technologies.map(tech => 
-      selectedIds.includes(tech.id) 
-        ? { ...tech, status: bulkStatus }
-        : tech
-    );
-
-    setTechnologies(updatedTechnologies);
-    localStorage.setItem('technologies', JSON.stringify(updatedTechnologies));
+    // Применяем массовое обновление статуса через провайдер
+    bulkUpdate(selectedIds, { status: bulkStatus });
 
     setMessage(`Статус обновлен для ${selectedIds.length} технологий`);
     setSelectedIds([]);

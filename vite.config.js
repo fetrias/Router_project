@@ -5,4 +5,8 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   base: '/Router_project/',
+  server: {
+    // Открывать браузер при старте dev-сервера
+    open: true,
+  },
 })

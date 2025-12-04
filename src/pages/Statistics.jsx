@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useTechnologies } from '../contexts/TechnologiesContext';
 
 function Statistics() {
   const [stats, setStats] = useState({
@@ -9,21 +10,17 @@ function Statistics() {
     completed: 0
   });
 
+  const { technologies = [] } = useTechnologies();
+
   useEffect(() => {
-    const saved = localStorage.getItem('technologies');
-    if (saved) {
-      const technologies = JSON.parse(saved);
-      
-      const statistics = {
-        total: technologies.length,
-        notStarted: technologies.filter(t => t.status === 'not-started').length,
-        inProgress: technologies.filter(t => t.status === 'in-progress').length,
-        completed: technologies.filter(t => t.status === 'completed').length
-      };
-      
-      setStats(statistics);
-    }
-  }, []);
+    const statistics = {
+      total: technologies.length,
+      notStarted: technologies.filter(t => t.status === 'not-started').length,
+      inProgress: technologies.filter(t => t.status === 'in-progress').length,
+      completed: technologies.filter(t => t.status === 'completed').length
+    };
+    setStats(statistics);
+  }, [technologies]);
 
   const completionPercentage = stats.total > 0 
     ? Math.round((stats.completed / stats.total) * 100) 

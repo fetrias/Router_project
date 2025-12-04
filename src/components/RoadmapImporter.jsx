@@ -25,20 +25,17 @@ function RoadmapImporter({ onImport }) {
         id: Date.now() + index,
         title: item.name.replace('.json', '').replace(/-/g, ' '),
         description: `Дорожная карта для ${item.name}`,
-        category: 'roadmap',
-        difficulty: 'intermediate',
         status: 'not-started',
-        resources: [item.html_url],
         createdAt: new Date().toISOString()
       }));
       
-      // Вызываем колбэк для добавления технологий
+      // Вызываем колбэк для добавления технологий (передаём массив)
       if (onImport) {
-        for (const tech of newTechs) {
-          await onImport(tech);
-        }
+        // Если onImport возвращает промис, ждём его
+        const res = onImport(newTechs);
+        if (res && res.then) await res;
       }
-      
+
       alert(`Успешно импортировано ${newTechs.length} технологий из дорожных карт!`);
       
     } catch (err) {

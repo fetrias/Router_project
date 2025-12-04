@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
+import { useTechnologies } from '../contexts/TechnologiesContext';
 import { Link } from 'react-router-dom';
 import './TechnologySearch.css';
 
@@ -10,21 +11,18 @@ function TechnologySearch() {
   
   const debounceTimeout = useRef(null);
 
+  const { technologies = [] } = useTechnologies();
+
   // Функция поиска
   const searchTechnologies = (searchQuery) => {
     setSearching(true);
-    
-    // Получаем технологии из localStorage
-    const saved = localStorage.getItem('technologies');
-    const technologies = saved ? JSON.parse(saved) : [];
-    
-    // Фильтруем по запросу
-    const filtered = technologies.filter(tech => 
+
+    // Фильтруем по названию и описанию (категории/сложность не требуются)
+    const filtered = (technologies || []).filter(tech => 
       tech.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tech.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      tech.category.toLowerCase().includes(searchQuery.toLowerCase())
+      tech.description.toLowerCase().includes(searchQuery.toLowerCase())
     );
-    
+
     // Имитируем задержку сети
     setTimeout(() => {
       setResults(filtered);
@@ -135,12 +133,6 @@ function TechnologySearch() {
                   </div>
                   <p className="result-description">{tech.description}</p>
                   <div className="result-meta">
-                    <span className="result-category">📁 {tech.category}</span>
-                    <span className="result-difficulty">
-                      {tech.difficulty === 'beginner' && '🟢 Начальный'}
-                      {tech.difficulty === 'intermediate' && '🟡 Средний'}
-                      {tech.difficulty === 'advanced' && '🔴 Продвинутый'}
-                    </span>
                   </div>
                 </Link>
               ))}
